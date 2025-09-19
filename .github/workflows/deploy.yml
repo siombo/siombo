@@ -18,8 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Copy main.html to index.html
-        run: cp main.html index.html
+      - name: index.html
+        run: cp index.html
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
