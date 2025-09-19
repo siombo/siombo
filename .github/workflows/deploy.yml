@@ -1,4 +1,4 @@
-        name: Deploy HTML to Pages
+name: Deploy HTML to Pages
 
 on:
   push:
