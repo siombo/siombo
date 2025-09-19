@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmland Management Calculator</title>
+    <!-- Copyright © 2025 Oil Field Calculator America LLC. All Rights Reserved. -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+        }
+        .calculator-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            margin-top: 0;
+            color: #2e7d32;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #1b5e20;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            border-radius: 4px 4px 0 0;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 16px;
+            transition: 0.3s;
+            color: #2e7d32;
+            margin-top: 0;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #2e7d32;
+            color: white;
+        }
+        .tabcontent {
+            display: none;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Farmland Management Calculator</h1>
+        <p style="text-align: center; margin-top: -10px; color: #666; font-size: 14px;">© 2025 Oil Field Calculator America LLC. All Rights Reserved.</p>
+        
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'AreaCalc')" id="defaultOpen">Area Calculator</button>
+            <button class="tablinks" onclick="openTab(event, 'SeedCalc')">Seed Calculator</button>
+            <button class="tablinks" onclick="openTab(event, 'FertilizerCalc')">Fertilizer Calculator</button>
+            <button class="tablinks" onclick="openTab(event, 'YieldCalc')">Yield Estimator</button>
+            <button class="tablinks" onclick="openTab(event, 'ProfitCalc')">Profit Calculator</button>
+            <button class="tablinks" onclick="openTab(event, 'Premium')">Premium Access</button>
+        </div>
+        
+        <!-- Area Calculator -->
+        <div id="AreaCalc" class="tabcontent">
+            <div class="calculator-section">
+                <h2>Field Area Calculator</h2>
+                <div>
+                    <label for="length">Length (meters):</label>
+                    <input type="number" id="length" placeholder="Enter length">
+                    
+                    <label for="width">Width (meters):</label>
+                    <input type="number" id="width" placeholder="Enter width">
+                    
+                    <button onclick="calculateArea()">Calculate Area</button>
+                    
+                    <div id="areaResult" class="result">Result will appear here</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seed Calculator -->
+        <div id="SeedCalc" class="tabcontent">
+            <div class="calculator-section">
+                <h2>Seed Quantity Calculator</h2>
+                <div>
+                    <label for="fieldArea">Field Area (hectares):</label>
+                    <input type="number" id="fieldArea" placeholder="Enter area">
+                    
+                    <label for="cropType">Crop Type:</label>
+                    <select id="cropType">
+                        <option value="corn">Corn</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="soybeans">Soybeans</option>
+                        <option value="rice">Rice</option>
+                    </select>
+                    
+                    <button onclick="calculateSeedQuantity()">Calculate Seed Quantity</button>
+                    
+                    <div id="seedResult" class="result">Result will appear here</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Fertilizer Calculator -->
+        <div id="FertilizerCalc" class="tabcontent">
+            <div class="calculator-section">
+                <h2>Fertilizer Application Calculator</h2>
+                <div>
+                    <label for="fertArea">Field Area (hectares):</label>
+                    <input type="number" id="fertArea" placeholder="Enter area">
+                    
+                    <label for="fertType">Fertilizer Type:</label>
+                    <select id="fertType">
+                        <option value="nitrogen">Nitrogen (N)</option>
+                        <option value="phosphorus">Phosphorus (P)</option>
+                        <option value="potassium">Potassium (K)</option>
+                        <option value="npk">NPK Complex</option>
+                    </select>
+                    
+                    <label for="appRate">Application Rate (kg/hectare):</label>
+                    <input type="number" id="appRate" placeholder="Enter rate">
+                    
+                    <button onclick="calculateFertilizer()">Calculate Fertilizer Amount</button>
+                    
+                    <div id="fertilizerResult" class="result">Result will appear here</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Yield Estimator -->
+        <div id="YieldCalc" class="tabcontent">
+            <div class="calculator-section">
+                <h2>Harvest Yield Estimator</h2>
+                <div>
+                    <label for="yieldArea">Field Area (hectares):</label>
+                    <input type="number" id="yieldArea" placeholder="Enter area">
+                    
+                    <label for="yieldCrop">Crop Type:</label>
+                    <select id="yieldCrop">
+                        <option value="corn">Corn</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="soybeans">Soybeans</option>
+                        <option value="rice">Rice</option>
+                    </select>
+                    
+                    <label for="yieldRate">Expected Yield Rate (tons/hectare):</label>
+                    <input type="number" id="yieldRate" placeholder="Enter expected yield rate">
+                    
+                    <button onclick="estimateYield()">Estimate Yield</button>
+                    
+                    <div id="yieldResult" class="result">Result will appear here</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profit Calculator -->
+        <div id="ProfitCalc" class="tabcontent">
+            <div class="calculator-section">
+                <h2>Profit/Expense Calculator</h2>
+                <div>
+                    <label for="totalYield">Total Yield (tons):</label>
+                    <input type="number" id="totalYield" placeholder="Enter total yield">
+                    
+                    <label for="pricePerTon">Price per Ton ($):</label>
+                    <input type="number" id="pricePerTon" placeholder="Enter price per ton">
+                    
+                    <label for="expenses">Total Expenses ($):</label>
+                    <input type="number" id="expenses" placeholder="Enter total expenses">
+                    
+                    <button onclick="calculateProfit()">Calculate Profit</button>
+                    
+                    <div id="profitResult" class="result">Result will appear here</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Premium Access -->
+        <div id="Premium" class="tabcontent">
+            <div class="calculator-section">
+                <h2>Premium Access</h2>
+                <div style="text-align: center;">
+                    <h3>Unlock Advanced Farm Management Tools</h3>
+                    <p>Get access to premium features including:</p>
+                    <ul style="display: inline-block; text-align: left; margin: 20px 0;">
+                        <li>Crop rotation planner</li>
+                        <li>Advanced profit forecasting</li>
+                        <li>Detailed weather integration</li>
+                        <li>Equipment cost calculator</li>
+                        <li>CSV export for all calculations</li>
+                    </ul>
+                    
+                    <div style="margin: 30px 0; padding: 20px; background-color: #f0f8f0; border-radius: 8px; display: inline-block;">
+                        <h3 style="margin-top: 0;">Subscription Options</h3>
+                        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
+                            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 200px;">
+                                <h4>Monthly</h4>
+                                <p style="font-size: 24px; font-weight: bold; color: #2e7d32;">$9.99</p>
+                                <p>Per month</p>
+                                <button id="payMonthly" style="width: 100%; background-color: #2e7d32;">Subscribe</button>
+                            </div>
+                            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 200px; box-shadow: 0 0 10px rgba(46,125,50,0.2);">
+                                <h4>Annual <span style="background-color: #2e7d32; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px;">SAVE 25%</span></h4>
+                                <p style="font-size: 24px; font-weight: bold; color: #2e7d32;">$89.99</p>
+                                <p>Per year</p>
+                                <button id="payYearly" style="width: 100%; background-color: #2e7d32;">Subscribe</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PayPal Integration -->
+                    <div id="paypal-button-container" style="max-width: 500px; margin: 0 auto;"></div>
+                    
+                    <p style="margin-top: 20px; font-size: 14px; color: #666;">
+                        Secure payment processing by PayPal. Cancel anytime.<br>
+                        Need help? Contact support@oilfieldcalculator.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer style="text-align: center; margin-top: 20px; padding: 10px; color: #666; font-size: 12px;">
+        Copyright © 2025 Oil Field Calculator America LLC. All Rights Reserved.<br>
+        Unauthorized reproduction or distribution is strictly prohibited.
+    </footer>
+
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+    
+    <script>
+        // Default open the first tab
+        document.getElementById("defaultOpen").click();
+        
+        // Tab functionality
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            // Hide all tab content
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            
+            // Remove "active" class from all tab buttons
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            
+            // Show the current tab and add "active" class to the button
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        
+        // Area Calculator
+        function calculateArea() {
+            const length = parseFloat(document.getElementById("length").value);
+            const width = parseFloat(document.getElementById("width").value);
+            
+            if (isNaN(length) || isNaN(width)) {
+                document.getElementById("areaResult").innerText = "Please enter valid numbers";
+                return;
+            }
+            
+            const areaSquareMeters = length * width;
+            const areaHectares = areaSquareMeters / 10000;
+            const areaAcres = areaHectares * 2.47105;
+            
+            document.getElementById("areaResult").innerHTML = 
+                `Area: ${areaSquareMeters.toFixed(2)} square meters<br>
+                 ${areaHectares.toFixed(4)} hectares<br>
+                 ${areaAcres.toFixed(4)} acres`;
+        }
+        
+        // Seed Calculator
+        function calculateSeedQuantity() {
+            const area = parseFloat(document.getElementById("fieldArea").value);
+            const cropType = document.getElementById("cropType").value;
+            
+            if (isNaN(area)) {
+                document.getElementById("seedResult").innerText = "Please enter a valid area";
+                return;
+            }
+            
+            let seedRate = 0;
+            let unit = "";
+            
+            // Seed rates in kg per hectare (approximate values)
+            switch(cropType) {
+                case "corn":
+                    seedRate = 25;
+                    unit = "kg";
+                    break;
+                case "wheat":
+                    seedRate = 150;
+                    unit = "kg";
+                    break;
+                case "soybeans":
+                    seedRate = 80;
+                    unit = "kg";
+                    break;
+                case "rice":
+                    seedRate = 100;
+                    unit = "kg";
+                    break;
+            }
+            
+            const totalSeed = area * seedRate;
+            
+            document.getElementById("seedResult").innerHTML = 
+                `Recommended seed quantity: ${totalSeed.toFixed(2)} ${unit}<br>
+                 Seed rate: ${seedRate} ${unit}/hectare`;
+        }
+        
+        // Fertilizer Calculator
+        function calculateFertilizer() {
+            const area = parseFloat(document.getElementById("fertArea").value);
+            const fertType = document.getElementById("fertType").value;
+            const appRate = parseFloat(document.getElementById("appRate").value);
+            
+            if (isNaN(area) || isNaN(appRate)) {
+                document.getElementById("fertilizerResult").innerText = "Please enter valid numbers";
+                return;
+            }
+            
+            const totalFertilizer = area * appRate;
+            let recommendation = "";
+            
+            // Basic recommendations based on fertilizer type
+            switch(fertType) {
+                case "nitrogen":
+                    recommendation = "Best applied in split doses during growing season.";
+                    break;
+                case "phosphorus":
+                    recommendation = "Best applied before planting.";
+                    break;
+                case "potassium":
+                    recommendation = "Can be applied before planting or during growing season.";
+                    break;
+                case "npk":
+                    recommendation = "Balanced nutrition. Apply according to soil test recommendations.";
+                    break;
+            }
+            
+            document.getElementById("fertilizerResult").innerHTML = 
+                `Total fertilizer needed: ${totalFertilizer.toFixed(2)} kg<br>
+                 <span style="font-weight: normal; font-style: italic;">${recommendation}</span>`;
+        }
+        
+        // Yield Estimator
+        function estimateYield() {
+            const area = parseFloat(document.getElementById("yieldArea").value);
+            const cropType = document.getElementById("yieldCrop").value;
+            const yieldRate = parseFloat(document.getElementById("yieldRate").value);
+            
+            if (isNaN(area) || isNaN(yieldRate)) {
+                document.getElementById("yieldResult").innerText = "Please enter valid numbers";
+                return;
+            }
+            
+            const totalYield = area * yieldRate;
+            let marketValue = 0;
+            
+            // Approximate market values in USD per ton (simplified estimates)
+            switch(cropType) {
+                case "corn":
+                    marketValue = 200;
+                    break;
+                case "wheat":
+                    marketValue = 250;
+                    break;
+                case "soybeans":
+                    marketValue = 400;
+                    break;
+                case "rice":
+                    marketValue = 350;
+                    break;
+            }
+            
+            const estimatedValue = totalYield * marketValue;
+            
+            document.getElementById("yieldResult").innerHTML = 
+                `Estimated yield: ${totalYield.toFixed(2)} tons<br>
+                 Estimated market value: $${estimatedValue.toFixed(2)}<br>
+                 (Based on approx. $${marketValue}/ton)`;
+        }
+        
+        // Profit Calculator
+        function calculateProfit() {
+            const yield = parseFloat(document.getElementById("totalYield").value);
+            const pricePerTon = parseFloat(document.getElementById("pricePerTon").value);
+            const expenses = parseFloat(document.getElementById("expenses").value);
+            
+            if (isNaN(yield) || isNaN(pricePerTon) || isNaN(expenses)) {
+                document.getElementById("profitResult").innerText = "Please enter valid numbers";
+                return;
+            }
+            
+            const revenue = yield * pricePerTon;
+            const profit = revenue - expenses;
+            const profitMargin = (profit / revenue) * 100;
+            
+            let profitStatus = "";
+            if (profit > 0) {
+                profitStatus = `<span style="color: green;">Profit: $${profit.toFixed(2)}</span>`;
+            } else if (profit < 0) {
+                profitStatus = `<span style="color: red;">Loss: $${Math.abs(profit).toFixed(2)}</span>`;
+            } else {
+                profitStatus = `<span style="color: blue;">Break-even</span>`;
+            }
+            
+            document.getElementById("profitResult").innerHTML = 
+                `Revenue: $${revenue.toFixed(2)}<br>
+                 Expenses: $${expenses.toFixed(2)}<br>
+                 ${profitStatus}<br>
+                 Profit Margin: ${profitMargin.toFixed(2)}%`;
+        }
+        
+        // PayPal Integration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize PayPal buttons when the DOM is fully loaded
+            if (document.getElementById('paypal-button-container')) {
+                initializePayPalButtons();
+            }
+            
+            // Add event listeners to subscription buttons
+            document.getElementById('payMonthly').addEventListener('click', function() {
+                // Show monthly subscription in PayPal
+                document.getElementById('paypal-button-container').scrollIntoView({behavior: 'smooth'});
+            });
+            
+            document.getElementById('payYearly').addEventListener('click', function() {
+                // Show yearly subscription in PayPal
+                document.getElementById('paypal-button-container').scrollIntoView({behavior: 'smooth'});
+            });
+        });
+        
+        function initializePayPalButtons() {
+            // This is a placeholder function - you need to replace 'YOUR_PAYPAL_CLIENT_ID' above
+            // with your actual PayPal client ID for this to work properly
+            
+            paypal.Buttons({
+                // Set up the transaction
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: '9.99' // This would be dynamic based on subscription choice
+                            }
+                        }]
+                    });
+                },
+                
+                // Finalize the transaction
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(orderData) {
+                        // Show a success message to the buyer
+                        alert('Transaction completed! Thank you for subscribing to premium features.');
+                        
+                        // Here you would typically:
+                        // 1. Store the subscription in a database
+                        // 2. Activate premium features for the user
+                        // 3. Redirect to a thank you page
+                    });
+                }
+            }).render('#paypal-button-container');
+        }
+    </script>
+</body>
+</html>
